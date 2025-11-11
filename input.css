@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+    body {
+      font-family: "Source Code Pro", monospace; 
+      background: #0c1228;
+      color: #aab0d4;
+      user-select: none;
+      min-height: 100vh;
+    }
+    
+    .focus-outline:focus-visible {
+      outline: 2px solid #fdbb64;
+      outline-offset: 2px;
+    }
+    
+    
+    
+
+    /* لإخفاء الشريط تمامًا */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer */
+  scrollbar-width: none; /* Firefox */
+}
+
+  .game-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+  }
+
+  #gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 0.5rem;
+    background-color: hsl(220, 26%, 6%);
+    border: 2px solid hsl(180, 100%, 50%);
+    box-shadow: 0 0 30px hsl(180 100% 50% / 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .game-container {
+      aspect-ratio: 3 / 4; /* لجعلها أطول على الموبايل */
+    }
+  }

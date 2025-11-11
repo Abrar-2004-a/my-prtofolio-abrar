@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abrar-Amer Portfolio </title>
+
+  <!-- Tailwind CSS CDN -->
+   <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <!-- AOS CSS CDN -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!---css-->
+<link href="output.css" rel="stylesheet">
+<link rel="stylesheet" href="input.css">
+ <!--font font-awesome--->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body >
+
+  <!---Header Start--->
+  <header class=" w-full h-6 bg-[#1e1f29] z-40 fixed top-0">
+
+      <!---navbar-->
+    <nav class="pl-4 pr-4  ">
+       
+      <div class="  flex justify-between items-center">
+        <!--left---->
+       <div class="">
+        <ul class="flex  space-x-4 ">
+          <li><img class="w-6 h-6" src="./images/icons8-visual-studio-code-48.png" alt=""></li>
+          
+             <li class="hidden md:inline-block text-white text-sm">File</li>
+          <li class="hidden md:inline-block text-white text-sm">Edit</li>
+          <li class="hidden md:inline-block text-white text-sm">View</li>
+          <li class="hidden md:inline-block text-white text-sm">Go</li>
+          <li class="hidden md:inline-block text-white text-sm">Run</li>
+          <li class="hidden md:inline-block text-white text-sm">Terminal</li>
+          <li class="hidden md:inline-block text-white text-sm">Help</li>
+        </ul>
+       </div>
+
+      <!---middle-->
+      <div>
+        <p class="text-white text-sm  mx-auto">Abrar Amer-Visual Studio Code</p>
+      </div>
+
+      <!---right-->
+      <div class="flex space-x-1.5">
+        <div class="bg-yellow-200 h-4 w-4 rounded-[50%]"></div>
+         <div class="bg-green-300 h-4 w-4 rounded-[50%]"></div>
+          <div class="bg-red-500 h-4 w-4 rounded-[50%]"></div>
+
+      </div>
+
+      </div>
+    </nav>
+     <!-----navbar--->
+     
+    <aside class="fixed top-6  lg:left-[300px] lg:w-[calc(100%-300px)] w-[75%] left-[70px] bg-[#191a21] h-9 flex items-center overflow-x-auto ">
+   <div class=" flex ">
+
+     <button class=" h-9 px-5 bg-[#282A36] border border-[#191a21] active:border-t-[#bd93f9] active:border-b-none active:bg-[#282a36] whitespace-nowrap no-scrollbar " data-page="game">
+     <img class="h-6 w-6 inline-block" src="./images/icons8-react-100.png" alt=""  >
+       Game.tsx
+     </button>
+
+       <button class="h-9 px-5 bg-[#282A36] border border-[#191a21] active:border-t-[#bd93f9] active:border-b-none active:bg-[#282a36]  whitespace-nowrap" data-page="about" >
+       <img class="h-6 w-6 inline-block" src="./images/icons8-html-64.png" alt=""  >
+       about.html
+     </button>
+
+       <button class="h-9 px-5 bg-[#282A36] border border-[#191a21] active:border-t-[#bd93f9] active:border-b-none active:bg-[#282a36] whitespace-nowrap  " data-page="contact" >
+        <img class="h-6 w-6 inline-block" src="./images/icons8-css3-64.png" alt="">
+      Contact.css
+     </button>
+
+       <button data-page="projects" class="h-9 px-5 bg-[#282A36] border border-[#191a21] active:border-t-[#bd93f9] active:border-b-none active:bg-[#282a36] whitespace-nowrap ">
+        <img class="h-6 w-6 inline-block" src="./images/icons8-javascript-64.png" alt="">
+       Projects.js
+     </button>
+
+       <button data-page="github" class="h-9 px-5 bg-[#282A36] border border-[#191a21] active:border-t-[#bd93f9] active:border-b-none active:bg-[#282a36]  whitespace-nowrap">
+        <img class="h-6 w-6 inline-block" src="./images/icons8-github-100.png" alt="">
+       github.md
+     </button>
+      
+     </div>
+    </navbar>
+
+
+    <!---SideBar---->
+     <aside  class="bg-[#343746] fixed top-6 left-0 h-full w-16 flex  items-center flex-col justify-between pt-4 pb-8">
+
+  
+        <!--top--->
+       <div  class="flex flex-col gap-4 w-full ">
+        <button data-page="about" class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200  ">
+
+       <img class="h-8 w-8" src="./images/icons8-copy-30.png" alt="">
+       </button>
+
+       <button data-page="github" class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200">
+        <img class="h-8 w-8  " src="./images/icons8-github-24.png" alt="">
+        </button>
+
+        <button data-page="contact" class="cursor-pointer w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200">
+
+       <i class="fa-solid fa-code w-8 h-8  text-2xl text-gray-500"></i>
+        </button>
+        
+        <button data-page="projects"  class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200" >
+
+        <img  class="h-8 w-8" src="./images/icons8-pencil-48.png" alt="">
+        </button>
+
+        <button data-page="game" class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200" >
+        <img class="h-8 w-8" src="./images/icons8-game-48.png" alt="">
+        </button> 
+
+       </div>
+
+
+       <!--buttom--->
+
+        <div class="flex flex-col gap-y-4 ">
+       <button data-page="about" class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200" >
+        <img  class="h-8 w-8" src="./images/icons8-profile-32.png" alt="">
+       </button>
+      
+         <button data-page="contact" class="w-full h-12 flex items-center justify-center hover:bg-[#6a737d] transition-colors duration-200">
+        <img class="h-8 w-8" src="./images/icons8-setting-24.png" alt="">
+       </button>
+        </div>
+     
+     </aside>
+  
+
+     <!---2sidebar---->
+<aside class="hidden fixed top-6 left-[65px] h-full w-[235px] bg-[#21222c] lg:flex flex-col">
+  <p class="uppercase text-white text-lg font-light mt-2 ml-2">Explorer</p>
+  
+  <div class="w-full max-w-md">
+    <!-- الزر الرئيسي -->
+    <button id="toggleBtn" class="  flex items-center w-full px-4 py-3 text-white hover:bg-gray-700 transition">
+      <span id="arrow" class="transform transition-transform duration-300 mr-2">▶</span>
+      <span class="text-md uppercase font-normal">Portfolio</span>
+    </button>
+
+    <!-- القائمة -->
+    <div id="content" class="max-h-0 overflow-hidden transition-all duration-500">
+      <ul class="space-y-2 text-gray-200">
+        <li  data-page="game" class="menu-item cursor-pointer h-9 px-5 bg-[#282A36] border border-[#191a21] hover:bg-[#313241] whitespace-nowrap">
+          <img class="h-6 w-6 inline-block" src="./images/icons8-react-100.png" alt="">
+          Game.tsx
+        </li>
+
+        <li data-page="about" class="menu-item cursor-pointer h-9 px-5 bg-[#282A36] border border-[#191a21] hover:bg-[#313241] whitespace-nowrap">
+          <img class="h-6 w-6 inline-block" src="./images/icons8-html-64.png" alt="">
+          about.html
+        </li>
+
+        <li data-page="contact" class="menu-item cursor-pointer h-9 px-5 bg-[#282A36] border border-[#191a21] hover:bg-[#313241] whitespace-nowrap">
+          <img class="h-6 w-6 inline-block" src="./images/icons8-css3-64.png" alt="">
+          Contact.css
+        </li>
+
+        <li data-page="projects" class="menu-item cursor-pointer h-9 px-5 bg-[#282A36] border border-[#191a21] hover:bg-[#313241] whitespace-nowrap">
+          <img class="h-6 w-6 inline-block" src="./images/icons8-javascript-64.png" alt="">
+          Projects.js
+        </li>
+
+        <li data-page="github" class="menu-item cursor-pointer h-9 px-5 bg-[#282A36] border border-[#191a21] hover:bg-[#313241] whitespace-nowrap">
+          <img class="h-6 w-6 inline-block" src="./images/icons8-github-100.png" alt="">
+          github.md
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+  </header>
+
+
+
+<!--Header end---->
+<main data-aos="zoom-in-up" id="mainContent" class="flex flex-col items-center  p-10 mt-12 md:ml-60  ml-4 transition-all duration-500">
+  
+    <iframe data-aos="zoom-in-left" 
+      src="./htmlfiles/game.html" 
+      class="w-full md:h-screen md:pl-20 pl-2 duration-5000 delay-4000 bg-none h-[400px]  min-w-[410px]  mx-auto  "
+     
+    ></iframe>
+  
+   
+   </div>
+  </main>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+  
+</div>
+
+
+
+
+
+
+
+<!-------------------------------------------------------------------->
+
+
+<!-- AOS and JS below -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="main.js"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+</body>
+</html>

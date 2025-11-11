@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'hsl(220, 26%, 6%)',
+            foreground: 'hsl(180, 100%, 95%)',
+            primary: 'hsl(180, 100%, 50%)',
+            secondary: 'hsl(160, 84%, 45%)',
+            destructive: 'hsl(0, 72%, 51%)',
+            card: 'hsl(220, 24%, 8%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color:#0c1228 ;
+      color: hsl(180, 100%, 95%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    #gameCanvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      touch-action: none;
+    }
+    .game-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 4 / 3;
+    }
+  </style>
+</head>
+<body class="max-h-screen flex items-center justify-center   mt-10 ">
+  <div class=" md:max-w-4xl mix-w-[300px] items-center  " >
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[hsl(180,100%,50%)] to-[hsl(160,84%,45%)] bg-clip-text text-transparent">
+       Catch & Survive
+      </h1>
+      <p class="text-xl mb-2 opacity-70">
+        Catch the green orbs, avoid the red ones!
+      </p>
+      <p id="scoreDisplay" class="text-lg font-bold" style="color: hsl(180, 100%, 50%)">Score: 0</p>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container mx-auto w-full max-w-[800px] aspect-[4/3] ">
+      <canvas
+        id="gameCanvas"
+        width="800"
+        height="600"
+        class="border-2 rounded-lg"
+        style="border-color: hsl(180, 100%, 50%); box-shadow: 0 0 30px hsl(180 100% 50% / 0.3); background-color: hsl(220, 26%, 6%);"
+      ></canvas>
+
+      <!-- Game Overlay -->
+      <div
+        id="gameOverlay"
+        class="absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm"
+        style="background-color: hsl(220 26% 6% / 0.9);"
+      >
+        <div class="text-center space-y-4">
+          <h3 id="overlayText" class="text-3xl font-bold">
+            Ready to Play?
+          </h3>
+          <button
+            id="startButton"
+            class="px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300"
+            style="background-color: hsl(180, 100%, 50%); color: hsl(220, 26%, 6%); box-shadow: 0 0 20px hsl(180 100% 50% / 0.3);"
+            onmouseover="this.style.backgroundColor='hsl(180, 100%, 45%)'"
+            onmouseout="this.style.backgroundColor='hsl(180, 100%, 50%)'"
+          >
+            Start Game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="text-center mt-8 opacity-70">
+      <p class="hidden md:block">Move your mouse to control the paddle</p>
+      <p class="md:hidden">Touch and drag to control the paddle</p>
+    </div>
+  </div>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+  const startButton = document.getElementById('startButton');
+  const overlay = document.getElementById('gameOverlay');
+  const overlayText = document.getElementById('overlayText');
+
+  // الحالة العامة للعبة
+  let gameState = {
+    score: 0,
+    gameOver: false,
+    gameStarted: false,
+    animationId: 0,
+    spawnTimer: 0,
+    player: { x: 0, y: 0, width: 60, height: 20 },
+    items: []
+  };
+
+  // 📱 ضبط مقاس الكانفاس ليكون Responsive
+  function resizeCanvas() {
+  const container = document.querySelector('.game-container');
+  const rect = container.getBoundingClientRect();
+
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+
+  gameState.player.y = canvas.height - 60;
+  if (gameState.player.x + gameState.player.width > canvas.width) {
+    gameState.player.x = canvas.width - gameState.player.width;
+  }
+}
+
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas(); // استدعاء عند بداية التحميل
+
+  // التحكم في حركة اللاعب
+  function handleMove(clientX) {
+    if (!gameState.gameStarted || gameState.gameOver) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const canvasX = (clientX - rect.left) * scaleX;
+    gameState.player.x = canvasX - gameState.player.width / 2;
+    gameState.player.x = Math.max(0, Math.min(canvas.width - gameState.player.width, gameState.player.x));
+  }
+
+  canvas.addEventListener('mousemove', e => handleMove(e.clientX));
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (e.touches.length > 0) handleMove(e.touches[0].clientX);
+  }, { passive: false });
+
+  // توليد الكرات
+  function spawnItem() {
+    gameState.items.push({
+      x: Math.random() * (canvas.width - 30),
+      y: -30,
+      speed: 2 + Math.random() * 3,
+      isBad: Math.random() > 0.7,
+    });
+  }
+
+  // 🎮 حلقة اللعبة
+  function gameLoop() {
+    ctx.fillStyle = 'hsl(220, 26%, 6%)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // رسم اللاعب
+    ctx.fillStyle = 'hsl(180, 100%, 50%)';
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = 'hsl(180, 100%, 50%)';
+    ctx.fillRect(gameState.player.x, gameState.player.y, gameState.player.width, gameState.player.height);
+    ctx.shadowBlur = 0;
+
+    // رسم الكرات
+    gameState.items = gameState.items.filter(item => {
+      item.y += item.speed;
+
+      // اصطدام
+      if (
+        item.y + 30 > gameState.player.y &&
+        item.x + 30 > gameState.player.x &&
+        item.x < gameState.player.x + gameState.player.width
+      ) {
+        if (item.isBad) {
+          gameState.gameOver = true;
+          endGame();
+          return false;
+        } else {
+          gameState.score += 10;
+          scoreDisplay.textContent = `Score: ${gameState.score}`;
+          return false;
+        }
+      }
+
+      // لو خرجت من الشاشة
+      if (item.y > canvas.height) return false;
+
+      // رسم العنصر
+      ctx.fillStyle = item.isBad ? 'hsl(0, 72%, 51%)' : 'hsl(160, 84%, 45%)';
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = ctx.fillStyle;
+      ctx.beginPath();
+      ctx.arc(item.x + 15, item.y + 15, 15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      return true;
+    });
+
+    if (!gameState.gameOver) requestAnimationFrame(gameLoop);
+  }
+
+  function endGame() {
+    clearInterval(gameState.spawnTimer);
+    overlay.classList.remove('hidden');
+    overlayText.textContent = `Game Over! Score: ${gameState.score}`;
+    startButton.textContent = '🔄 Play Again';
+  }
+
+  function startGame() {
+    gameState.score = 0;
+    gameState.gameOver = false;
+    gameState.gameStarted = true;
+    gameState.items = [];
+    gameState.player.x = canvas.width / 2;
+    gameState.player.y = canvas.height - 60;
+
+    scoreDisplay.textContent = 'Score: 0';
+    overlay.classList.add('hidden');
+
+    clearInterval(gameState.spawnTimer);
+    gameState.spawnTimer = setInterval(spawnItem, 800);
+    gameLoop();
+  }
+
+  startButton.addEventListener('click', startGame);
+</script>
+
+</body>

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "my-prtofolio-abrar",
+  "builds": [
+    {
+      "src": "html.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/html.html"
+    }
+  ]
+}
